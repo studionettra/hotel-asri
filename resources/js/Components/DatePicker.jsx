@@ -17,15 +17,25 @@ export default function DatePicker({ value, onChange, min, max, className = '', 
         return val;
     };
 
+    // Safely parse Y-m-d to Date object to avoid flatpickr leap year parsing bug
+    const parseToDateObj = (val) => {
+        if (!val) return null;
+        const parts = val.split('-');
+        if (parts.length === 3) {
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+        return null;
+    };
+
     useEffect(() => {
         if (!inputRef.current) return;
         
         fpRef.current = flatpickr(inputRef.current, {
             locale: Indonesian,
             dateFormat: 'd/m/Y',
-            defaultDate: value ? getDisplayValue(value) : null,
-            minDate: min ? getDisplayValue(min) : null,
-            maxDate: max ? getDisplayValue(max) : null,
+            defaultDate: parseToDateObj(value),
+            minDate: parseToDateObj(min),
+            maxDate: parseToDateObj(max),
             allowInput: true,
             onChange: (selectedDates) => {
                 if (onChange) {
@@ -52,16 +62,16 @@ export default function DatePicker({ value, onChange, min, max, className = '', 
     // Effect to update flatpickr if value or constraints change externally
     useEffect(() => {
         if (fpRef.current && value !== undefined) {
-            fpRef.current.setDate(value ? getDisplayValue(value) : null, false);
+            fpRef.current.setDate(parseToDateObj(value), false);
         }
     }, [value]);
 
     useEffect(() => {
-        if (fpRef.current && min) fpRef.current.set('minDate', getDisplayValue(min));
+        if (fpRef.current && min) fpRef.current.set('minDate', parseToDateObj(min));
     }, [min]);
 
     useEffect(() => {
-        if (fpRef.current && max) fpRef.current.set('maxDate', getDisplayValue(max));
+        if (fpRef.current && max) fpRef.current.set('maxDate', parseToDateObj(max));
     }, [max]);
 
     return (

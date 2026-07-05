@@ -19,6 +19,24 @@ class Payment extends Model
         ];
     }
 
+    protected function paymentMethod(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            set: function ($value) {
+                $map = [
+                    'Cash'          => 'cash',
+                    'Bank Transfer' => 'transfer',
+                    'Credit Card'   => 'credit_card',
+                    'Debit Card'    => 'debit_card',
+                    'E-Wallet'      => 'transfer',
+                    'City Ledger'   => 'city_ledger',
+                ];
+
+                return $map[$value] ?? strtolower(str_replace(' ', '_', $value));
+            }
+        );
+    }
+
     public function folio()
     {
         return $this->belongsTo(GuestFolio::class, 'folio_id');

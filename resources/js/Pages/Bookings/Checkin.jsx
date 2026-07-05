@@ -204,7 +204,7 @@ export default function Checkin({ rooms, roomConfigs, checkIn, checkOut, guests 
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label fw-semibold text-muted">NO. OF FLOOR</label>
-                                                    <input type="text" className="form-control bg-light" value="1" disabled />
+                                                    <input type="text" className="form-control bg-light" value={room.floor?.floor_name || room.floor?.floor_number || '-'} disabled />
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label fw-semibold text-muted mb-0">NO. OF PERSON</label>
