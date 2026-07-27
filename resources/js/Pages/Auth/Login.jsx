@@ -15,9 +15,9 @@ export default function Login() {
 
     return (
         <AuthLayout title="Login">
-            <div className="auth-logo">
+            <div className="auth-logo mt-5 mb-5">
                 <a href="/">
-                    <img src="/mazer/images/logo/logo-ppkd-hotel.png" alt="PPKD Hotel" style={{ height: '80px', width: 'auto' }} />
+                    <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '165px', width: 'auto' }} />
                 </a>
             </div>
             <h1 className="auth-title">Log in.</h1>

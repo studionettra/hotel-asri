@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
             [
                 'name'     => 'Administrator',
                 'username' => 'admin',
-                'email'    => 'admin@ppkdhotel.com',
+                'email'    => 'admin@hotelasri.com',
                 'password' => Hash::make('admin12345'),
                 'is_active' => true,
                 'role'     => 'Administrator',
@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             [
                 'name'     => 'Front Office 1',
                 'username' => 'fo1',
-                'email'    => 'fo1@ppkdhotel.com',
+                'email'    => 'fo1@hotelasri.com',
                 'password' => Hash::make('fo12345'),
                 'is_active' => true,
                 'role'     => 'Front Office',
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             [
                 'name'     => 'Housekeeping 1',
                 'username' => 'hk1',
-                'email'    => 'hk1@ppkdhotel.com',
+                'email'    => 'hk1@hotelasri.com',
                 'password' => Hash::make('hk12345'),
                 'is_active' => true,
                 'role'     => 'Housekeeping',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             [
                 'name'     => 'F&B Service 1',
                 'username' => 'fnb1',
-                'email'    => 'fnb1@ppkdhotel.com',
+                'email'    => 'fnb1@hotelasri.com',
                 'password' => Hash::make('fnb12345'),
                 'is_active' => true,
                 'role'     => 'F&B Service',

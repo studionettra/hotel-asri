@@ -196,7 +196,7 @@ export default function AppLayout({ children, title, breadcrumbs = [] }) {
                         <footer>
                             <div className="footer clearfix mb-0 text-muted">
                                 <div className="float-start">
-                                    <p>2026 &copy; PPKD Hotel Management System</p>
+                                    <p>2026 &copy; Hotel Asri Management System</p>
                                 </div>
                             </div>
                         </footer>

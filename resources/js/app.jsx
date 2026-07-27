@@ -1,18 +1,18 @@
-import { createInertiaApp } from '@inertiajs/react';
-import { createRoot } from 'react-dom/client';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createInertiaApp } from "@inertiajs/react";
+import { createRoot } from "react-dom/client";
+import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 createInertiaApp({
-    title: (title) => title ? `${title} — PPKD Hotel` : 'PPKD Hotel',
+    title: (title) => (title ? `${title} — Hotel Asri` : "Hotel Asri"),
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.jsx`,
-            import.meta.glob('./Pages/**/*.jsx'),
+            import.meta.glob("./Pages/**/*.jsx"),
         ),
     setup({ el, App, props }) {
         createRoot(el).render(<App {...props} />);
     },
     progress: {
-        color: '#435ebe',
+        color: "#435ebe",
     },
 });

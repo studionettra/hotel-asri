@@ -419,7 +419,7 @@ export default function Checkin({ rooms, roomConfigs, checkIn, checkOut, guests 
                                     )}
                                     {data.payment_method === 'Bank Transfer' && (
                                         <div className="alert alert-warning">
-                                            <strong>Bank Mandiri</strong><br/>No. Rek: 123-456-789-0<br/>A/N: PPKD Hotel
+                                            <strong>Bank Mandiri</strong><br/>No. Rek: 123-456-789-0<br/>A/N: Hotel Asri
                                         </div>
                                     )}
                                     {data.payment_method === 'Credit Card' && (

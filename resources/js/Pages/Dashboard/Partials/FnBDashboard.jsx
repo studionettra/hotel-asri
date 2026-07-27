@@ -1,71 +1,16 @@
 import { Link } from '@inertiajs/react';
+import StatCard from '@/Components/StatCard';
 
 export default function FnBDashboard({ data }) {
     const formatCurrency = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
 
     return (
         <div>
-            <div className="row">
-                <div className="col-6 col-lg-3 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon orange" style={{ backgroundColor: '#fd7e14' }}>
-                                    <i className="iconly-boldTime-Circle"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Pesanan Aktif</h6>
-                                    <h6 className="font-extrabold mb-0">{data.active_orders}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-3 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon blue">
-                                    <i className="iconly-boldHome"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Layanan Kamar</h6>
-                                    <h6 className="font-extrabold mb-0">{data.room_service_orders}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-3 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon purple">
-                                    <i className="iconly-boldBag"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Pesanan Restoran</h6>
-                                    <h6 className="font-extrabold mb-0">{data.restaurant_orders}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-3 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon green">
-                                    <i className="iconly-boldWallet"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Pendapatan Hari Ini</h6>
-                                    <h6 className="font-extrabold mb-0">{formatCurrency(data.revenue_today)}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="row g-3 mb-4">
+                <StatCard title="Pesanan Aktif" value={data.active_orders} color="warning" icon="bi-clock-history" cols="col-12 col-md-3" />
+                <StatCard title="Layanan Kamar" value={data.room_service_orders} color="primary" icon="bi-door-closed" cols="col-12 col-md-3" />
+                <StatCard title="Pesanan Restoran" value={data.restaurant_orders} color="info" icon="bi-shop" cols="col-12 col-md-3" />
+                <StatCard title="Pendapatan Hari Ini" value={formatCurrency(data.revenue_today)} color="success" icon="bi-cash-stack" cols="col-12 col-md-3" />
             </div>
 
             <div className="row mt-3">

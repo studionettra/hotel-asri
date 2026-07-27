@@ -1,4 +1,5 @@
 import Chart from 'react-apexcharts';
+import StatCard from '@/Components/StatCard';
 
 export default function AdminDashboard({ data }) {
     const revenueChartOptions = {
@@ -23,104 +24,20 @@ export default function AdminDashboard({ data }) {
 
     return (
         <div>
-            <div className="row">
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon purple">
-                                    <i className="iconly-boldHome"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Tingkat Hunian</h6>
-                                    <h6 className="font-extrabold mb-0">{data.occupancy_rate}%</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon blue">
-                                    <i className="iconly-boldWallet"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Pendapatan Hari Ini</h6>
-                                    <h6 className="font-extrabold mb-0">{formatCurrency(data.revenue_today)}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon green">
-                                    <i className="iconly-boldProfile"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Tamu Aktif</h6>
-                                    <h6 className="font-extrabold mb-0">{data.active_guests}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon blue">
-                                    <i className="iconly-boldBookmark"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Kamar Tersedia (VC)</h6>
-                                    <h6 className="font-extrabold mb-0">{data.available_rooms}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon purple">
-                                    <i className="iconly-boldCalendar"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Reservasi Baru</h6>
-                                    <h6 className="font-extrabold mb-0">{data.new_reservations}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-6 col-lg-4 col-md-6">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="stats-icon red">
-                                    <i className="iconly-boldSetting"></i>
-                                </div>
-                                <div>
-                                    <h6 className="text-muted font-semibold">Kamar OOO / OOS</h6>
-                                    <h6 className="font-extrabold mb-0">{data.ooo_rooms}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="row g-3 mb-4">
+                <StatCard title="Tingkat Hunian" value={`${data.occupancy_rate}%`} color="primary" icon="bi-building" cols="col-12 col-md-4" />
+                <StatCard title="Pendapatan Hari Ini" value={formatCurrency(data.revenue_today)} color="success" icon="bi-cash-stack" cols="col-12 col-md-4" />
+                <StatCard title="Tamu Aktif" value={data.active_guests} color="info" icon="bi-people" cols="col-12 col-md-4" />
+                <StatCard title="Kamar Tersedia (VC)" value={data.available_rooms} color="primary" icon="bi-door-open" cols="col-12 col-md-4" />
+                <StatCard title="Reservasi Baru" value={data.new_reservations} color="warning" icon="bi-calendar-plus" cols="col-12 col-md-4" />
+                <StatCard title="Kamar OOO / OOS" value={data.ooo_rooms} color="danger" icon="bi-tools" cols="col-12 col-md-4" />
             </div>
 
-            <div className="row">
+            <div className="row g-4">
                 <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-header">
-                            <h4>Tren Pendapatan (7 Hari Terakhir)</h4>
+                    <div className="card border-0 shadow-sm h-100">
+                        <div className="card-header bg-transparent border-0 pt-4 pb-0">
+                            <h5 className="mb-0 fw-bold">Tren Pendapatan (7 Hari Terakhir)</h5>
                         </div>
                         <div className="card-body">
                             <Chart options={revenueChartOptions} series={[{ name: 'Pendapatan', data: data.revenue_trend.data }]} type="line" height={300} />
@@ -128,9 +45,9 @@ export default function AdminDashboard({ data }) {
                     </div>
                 </div>
                 <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-header">
-                            <h4>Tren Hunian (7 Hari Terakhir)</h4>
+                    <div className="card border-0 shadow-sm h-100">
+                        <div className="card-header bg-transparent border-0 pt-4 pb-0">
+                            <h5 className="mb-0 fw-bold">Tren Hunian (7 Hari Terakhir)</h5>
                         </div>
                         <div className="card-body">
                             <Chart options={occupancyChartOptions} series={[{ name: 'Tingkat Hunian', data: data.occupancy_trend.data }]} type="area" height={300} />

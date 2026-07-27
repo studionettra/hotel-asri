@@ -136,7 +136,7 @@ export default function Sidebar({ isActive = true, onToggle }) {
                     <div className="d-flex justify-content-between align-items-center">
                         <div className="logo">
                             <a href="/dashboard">
-                                <img src="/mazer/images/logo/logo-ppkd-hotel.png" alt="PPKD Hotel" style={{ height: '56px', width: 'auto' }} />
+                                <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '56px', width: 'auto' }} />
                             </a>
                         </div>
                         <div className="theme-toggle d-flex gap-2 align-items-center mt-2">

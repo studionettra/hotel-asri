@@ -433,9 +433,9 @@ export default function Show({ folio }) {
                     {/* 1. Header */}
                     <div className="d-flex justify-content-between align-items-center print-mb-3 pb-3 border-bottom print-header">
                         <div className="d-flex align-items-center gap-3">
-                            <img src="/mazer/images/logo/logo-ppkd-hotel.png" alt="PPKD Hotel Logo" className="print-logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
+                            <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri Logo" className="print-logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
                             <div>
-                                <h3 className="fw-bold mb-0 text-dark print-title">PPKD HOTEL</h3>
+                                <h3 className="fw-bold mb-0 text-dark print-title">HOTEL ASRI</h3>
                                 <small className="text-muted d-block">Hospitality Excellence</small>
                             </div>
                         </div>
@@ -564,7 +564,7 @@ export default function Show({ folio }) {
                                     <div className="small text-muted mt-2 print-text-sm" style={{ lineHeight: '1.3' }}>
                                         <div>Settled via Transfer to:</div>
                                         <strong>Bank Mandiri</strong><br/>
-                                        A/N: PPKD Hotel Jakarta<br/>
+                                        A/N: Hotel Asri Jakarta<br/>
                                         Rek: 123-456-789-000
                                     </div>
                                 )}
@@ -577,8 +577,8 @@ export default function Show({ folio }) {
                             <div className="p-2 print-text-sm" style={{ lineHeight: '1.4' }}>
                                 <div className="mb-1"><i className="bi bi-geo-alt text-muted me-2"></i> Jl. Raya Condet No. 1, Jakarta Timur</div>
                                 <div className="mb-1"><i className="bi bi-telephone text-muted me-2"></i> +62 21 1234 5678</div>
-                                <div className="mb-1"><i className="bi bi-envelope text-muted me-2"></i> reservation@ppkdhotel.com</div>
-                                <div><i className="bi bi-globe text-muted me-2"></i> www.ppkdhotel.com</div>
+                                <div className="mb-1"><i className="bi bi-envelope text-muted me-2"></i> reservation@hotelasri.com</div>
+                                <div><i className="bi bi-globe text-muted me-2"></i> www.hotelasri.com</div>
                             </div>
                         </div>
                     </div>

@@ -1,18 +1,16 @@
-import AppLayout from '@/Layouts/AppLayout';
-import { Head, usePage } from '@inertiajs/react';
-import AdminDashboard from './Partials/AdminDashboard';
-import FODashboard from './Partials/FODashboard';
-import HKDashboard from './Partials/HKDashboard';
-import FnBDashboard from './Partials/FnBDashboard';
+import AppLayout from "@/Layouts/AppLayout";
+import { Head, usePage } from "@inertiajs/react";
+import AdminDashboard from "./Partials/AdminDashboard";
+import FODashboard from "./Partials/FODashboard";
+import HKDashboard from "./Partials/HKDashboard";
+import FnBDashboard from "./Partials/FnBDashboard";
 
 export default function Index({ dashboardData }) {
     return (
-        <AppLayout title="Dashboard">
+        <AppLayout title="Dashboard Hotel Asri">
             <Head title="Dashboard" />
 
-            <div className="page-heading">
-                {/* <h3>Dashboard</h3> */}
-            </div>
+            <div className="page-heading">{/* <h3>Dashboard</h3> */}</div>
 
             <div className="page-content">
                 {dashboardData.admin && (
@@ -45,7 +43,8 @@ export default function Index({ dashboardData }) {
 
                 {Object.keys(dashboardData).length === 0 && (
                     <div className="alert alert-info">
-                        Anda tidak memiliki akses ke data dashboard departemen manapun.
+                        Anda tidak memiliki akses ke data dashboard departemen
+                        manapun.
                     </div>
                 )}
             </div>
