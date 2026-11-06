@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Link, usePage } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import Swal from 'sweetalert2';
@@ -37,13 +37,29 @@ export default function Checkin({ rooms, roomConfigs, checkIn, checkOut, guests 
         };
     });
 
-    const { data, setData, post, processing } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         arrival_time: '',
         check_in: checkIn,
         check_out: checkOut,
         payment_method: '',
         rooms: initialRoomsData
     });
+
+    useEffect(() => {
+        if (Object.keys(errors).length > 0) {
+            const hasMemberCardError = Object.keys(errors).some(k => k.includes('member_card_no'));
+            const errorMessages = Object.values(errors).map(msg => `• ${msg}`).join('\n');
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Validasi Gagal',
+                text: hasMemberCardError 
+                    ? 'Nomor Member Card yang Anda masukkan sudah terdaftar untuk tamu lain. Silakan ganti nomor tersebut.' 
+                    : `Mohon periksa kembali form Anda:\n\n${errorMessages}`,
+                confirmButtonColor: '#d33'
+            });
+        }
+    }, [errors]);
 
     const [isSummaryGenerated, setIsSummaryGenerated] = useState(false);
 
@@ -326,7 +342,12 @@ export default function Checkin({ rooms, roomConfigs, checkIn, checkOut, guests 
                             {/* Tombol Submit Summary */}
                             <div className="card shadow-sm border-0 bg-primary bg-opacity-10 mt-4 mb-4">
                                 <div className="card-body text-end p-4">
-                                    <button type="button" className="btn btn-primary btn-lg fw-bold px-5" onClick={() => setIsSummaryGenerated(true)}>
+                                    <button type="button" className="btn btn-primary btn-lg fw-bold px-5" onClick={() => {
+                                        setIsSummaryGenerated(true);
+                                        setTimeout(() => {
+                                            document.getElementById('payment-summary')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }, 100);
+                                    }}>
                                         <i className="bi bi-calculator me-2"></i> Tampilkan Ringkasan Pembayaran
                                     </button>
                                 </div>
@@ -334,8 +355,8 @@ export default function Checkin({ rooms, roomConfigs, checkIn, checkOut, guests 
                         </div>
 
                         {/* Kanan: Ringkasan & Pembayaran */}
-                        <div className="col-lg-4">
-                            <div className="card sticky-top shadow-sm border-0" style={{ top: '2rem' }}>
+                        <div className="col-lg-4" id="payment-summary" style={{ scrollMarginTop: '140px' }}>
+                            <div className="card sticky-top shadow-sm border-0" style={{ top: '120px', zIndex: 1 }}>
                                 <div className="card-header bg-dark text-white">
                                     <h5 className="card-title mb-0 text-white">Ringkasan & Pembayaran</h5>
                                 </div>

@@ -100,10 +100,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Booking / Check-in Management
     Route::middleware('permission:reservation.create')->group(function () {
-        Route::get('/bookings/checkin', function() {
-            return redirect()->route('availability.index')->with('error', 'Sesi registrasi tidak valid atau telah berakhir. Silakan pilih kamar kembali.');
-        })->name('bookings.checkin.get');
-        Route::post('/bookings/checkin', [\App\Http\Controllers\BookingController::class, 'checkinForm'])->name('bookings.checkin');
+        Route::get('/bookings/checkin', [\App\Http\Controllers\BookingController::class, 'checkinForm'])->name('bookings.checkin.get');
+        Route::post('/bookings/checkin', [\App\Http\Controllers\BookingController::class, 'storeCheckinSession'])->name('bookings.checkin');
         Route::get('/bookings', function() {
             return redirect()->route('availability.index')->with('error', 'Sesi tidak valid.');
         })->name('bookings.fallback');

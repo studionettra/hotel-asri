@@ -16,10 +16,10 @@ use Inertia\Inertia;
 
 class BookingController extends Controller
 {
-    public function checkinForm(Request $request)
+    public function storeCheckinSession(Request $request)
     {
         // Expecting an array of room selections from Availability
-        $request->validate([
+        $data = $request->validate([
             'rooms' => 'required|array|min:1|max:5',
             'rooms.*.id' => 'required|exists:rooms,id',
             'rooms.*.extrabed' => 'boolean',
@@ -28,7 +28,18 @@ class BookingController extends Controller
             'check_out' => 'required|date|after:check_in',
         ]);
 
-        $roomsData = $request->rooms;
+        session()->put('checkin_session_data', $data);
+        return redirect()->route('bookings.checkin.get');
+    }
+
+    public function checkinForm(Request $request)
+    {
+        if (!session()->has('checkin_session_data')) {
+            return redirect()->route('availability.index')->with('error', 'Sesi registrasi tidak valid atau telah berakhir. Silakan pilih kamar kembali.');
+        }
+
+        $data = session('checkin_session_data');
+        $roomsData = $data['rooms'];
         $roomIds = collect($roomsData)->pluck('id');
         $rooms = Room::with('roomType', 'floor')->whereIn('id', $roomIds)->get();
         $guests = Guest::orderBy('full_name')->get();
@@ -37,8 +48,8 @@ class BookingController extends Controller
         return Inertia::render('Bookings/Checkin', [
             'rooms' => $rooms,
             'roomConfigs' => collect($roomsData)->keyBy('id'),
-            'checkIn' => $request->check_in,
-            'checkOut' => $request->check_out,
+            'checkIn' => $data['check_in'],
+            'checkOut' => $data['check_out'],
             'guests' => $guests,
         ]);
     }
@@ -53,7 +64,7 @@ class BookingController extends Controller
             'rooms.*.room_id' => 'required|exists:rooms,id',
             'rooms.*.extrabed' => 'boolean',
             'rooms.*.breakfast' => 'boolean',
-            'rooms.*.guest.id_type' => 'required|string|in:KTP,Passport,Kitas',
+            'rooms.*.guest.id_type' => 'required|string|in:KTP,Passport,Kitas,ktp,passport,sim,SIM',
             'rooms.*.guest.id_number' => 'required|string',
             'rooms.*.guest.full_name' => 'required|string',
             'rooms.*.guest.gender' => 'nullable|string|in:male,female',
@@ -63,7 +74,25 @@ class BookingController extends Controller
             'rooms.*.guest.company' => 'nullable|string',
             'rooms.*.guest.nationality' => 'nullable|string',
             'rooms.*.guest.date_of_birth' => 'nullable|date',
-            'rooms.*.guest.member_card_no' => 'nullable|string',
+            'rooms.*.guest.member_card_no' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) use ($request) {
+                    if (empty($value)) return;
+                    
+                    preg_match('/rooms\.(\d+)\.guest\.member_card_no/', $attribute, $matches);
+                    $index = $matches[1] ?? 0;
+                    $idNumber = $request->input("rooms.{$index}.guest.id_number");
+                    
+                    $query = \App\Models\Guest::where('member_card_no', $value);
+                    if ($idNumber) {
+                        $query->where('id_number', '!=', $idNumber);
+                    }
+                    if ($query->exists()) {
+                        $fail('Nomor Member Card ini sudah digunakan oleh tamu lain.');
+                    }
+                }
+            ],
             'rooms.*.guest.address' => 'nullable|string',
             'rooms.*.pax' => 'required|integer|min:1',
             'rooms.*.notes' => 'nullable|string',
