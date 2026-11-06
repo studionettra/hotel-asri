@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, router, usePage, Link } from '@inertiajs/react';
 import Sidebar from '@/Components/Sidebar';
 import Swal from 'sweetalert2';
 
@@ -144,7 +144,7 @@ export default function AppLayout({ children, title, breadcrumbs = [] }) {
                                             <li>
                                                 <h6 className="dropdown-header">Halo, {auth?.user?.name.split(' ')[0]}!</h6>
                                             </li>
-                                            <li><a className="dropdown-item" href="#"><i className="icon-mid bi bi-person me-2"></i> Profil</a></li>
+                                            <li><Link className="dropdown-item" href={route('profile.edit')}><i className="icon-mid bi bi-person me-2"></i> Profil</Link></li>
                                             <li>
                                                 <hr className="dropdown-divider" />
                                             </li>
