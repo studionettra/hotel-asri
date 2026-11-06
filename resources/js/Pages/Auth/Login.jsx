@@ -15,16 +15,16 @@ export default function Login() {
 
     return (
         <AuthLayout title="Login">
-            <div className="auth-logo mt-5 mb-5">
+            <div className="auth-logo mb-4">
                 <a href="/">
-                    <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '165px', width: 'auto' }} />
+                    <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '100px', width: 'auto' }} />
                 </a>
             </div>
-            <h1 className="auth-title">Log in.</h1>
-            <p className="auth-subtitle mb-5">Masuk dengan username dan password Anda.</p>
+            <h5 className="auth-title">Log In.</h5>
+            <p className="auth-subtitle mb-4">Silahkan masuk dengan username dan password Anda.</p>
 
             <form onSubmit={submit}>
-                <div className="form-group position-relative has-icon-left mb-4">
+                <div className="form-group position-relative has-icon-left mb-3">
                     <input
                         type="text"
                         className={`form-control form-control-xl${errors.username ? ' is-invalid' : ''}`}
@@ -42,7 +42,7 @@ export default function Login() {
                     )}
                 </div>
 
-                <div className="form-group position-relative has-icon-left mb-4">
+                <div className="form-group position-relative has-icon-left mb-3">
                     <input
                         type="password"
                         className={`form-control form-control-xl${errors.password ? ' is-invalid' : ''}`}
@@ -59,7 +59,7 @@ export default function Login() {
                     )}
                 </div>
 
-                <div className="form-check form-check-lg d-flex align-items-end mb-4">
+                <div className="form-check form-check-lg d-flex align-items-end mb-3">
                     <input
                         className="form-check-input me-2"
                         type="checkbox"

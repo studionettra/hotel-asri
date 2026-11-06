@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { usePage, Link, router } from '@inertiajs/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const MENU = [
     {
@@ -85,14 +86,14 @@ export default function Sidebar({ isActive = true, onToggle }) {
         document.body.classList.add(storedTheme);
     }, []);
 
-    const toggleTheme = (e) => {
-        const newTheme = e.target.checked ? 'dark' : 'light';
+    const toggleTheme = (newTheme) => {
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
         document.documentElement.setAttribute('data-bs-theme', newTheme);
         document.body.classList.remove('light', 'dark');
         document.body.classList.add(newTheme);
     };
+
     const hasPermission = (permission) => {
         if (!permission) return true;
         if (Array.isArray(permission)) return permission.some(p => permissions.includes(p));
@@ -131,38 +132,47 @@ export default function Sidebar({ isActive = true, onToggle }) {
 
     return (
         <div id="sidebar" className={isActive ? 'active' : ''}>
-            <div className={`sidebar-wrapper ${isActive ? 'active' : ''}`}>
-                <div className="sidebar-header">
+            <div className={`sidebar-wrapper ${isActive ? 'active' : ''} shadow-sm border-end border-opacity-10`}>
+                <div className="sidebar-header pt-4 pb-2">
                     <div className="d-flex justify-content-between align-items-center">
-                        <div className="logo">
-                            <a href="/dashboard">
-                                <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '56px', width: 'auto' }} />
-                            </a>
-                        </div>
-                        <div className="theme-toggle d-flex gap-2 align-items-center mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
-                                <g fill="none" fillRule="evenodd" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path>
-                                    <g transform="translate(-210 -1)"><path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path><circle cx="220.5" cy="11.5" r="4"></circle><path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path></g>
-                                </g>
-                            </svg>
-                            <div className="form-check form-switch fs-6 m-0">
-                                <input className="form-check-input me-0" type="checkbox" id="toggle-dark" style={{ cursor: 'pointer' }} checked={theme === 'dark'} onChange={toggleTheme} />
-                                <label className="form-check-label"></label>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"></path>
-                            </svg>
+                        <div className="logo w-100 text-center text-lg-start px-2">
+                            <Link href="/dashboard">
+                                <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
+                            </Link>
                         </div>
                         <div className="toggler">
-                            <a href="#" className="sidebar-hide d-xl-none d-block" onClick={(e) => { e.preventDefault(); if(onToggle) onToggle(); }}>
-                                <i className="bi bi-x bi-middle"></i>
+                            <a href="#" className="sidebar-hide d-xl-none d-block fs-3" onClick={(e) => { e.preventDefault(); if (onToggle) onToggle(); }}>
+                                <i className="bi bi-x bi-middle text-muted"></i>
                             </a>
+                        </div>
+                    </div>
+                    
+                    {/* Modern Theme Toggle */}
+                    <div className="mt-4 px-3">
+                        <div className="d-flex align-items-center p-1 rounded-pill w-100" style={{ backgroundColor: 'var(--bs-tertiary-bg)' }}>
+                            <motion.button 
+                                whileTap={{ scale: 0.95 }}
+                                className={`btn btn-sm rounded-pill border-0 flex-grow-1 d-flex align-items-center justify-content-center gap-2 ${theme === 'light' ? 'bg-white shadow-sm text-dark' : 'text-secondary'}`}
+                                onClick={() => toggleTheme('light')}
+                                style={{ height: '36px' }}
+                            >
+                                <i className="bi bi-sun-fill"></i>
+                                <span className="fs-7 fw-medium" style={{ fontSize: '0.85rem' }}>Light</span>
+                            </motion.button>
+                            <motion.button 
+                                whileTap={{ scale: 0.95 }}
+                                className={`btn btn-sm rounded-pill border-0 flex-grow-1 d-flex align-items-center justify-content-center gap-2 ${theme === 'dark' ? 'bg-dark shadow-sm text-light' : 'text-secondary'}`}
+                                onClick={() => toggleTheme('dark')}
+                                style={{ height: '36px' }}
+                            >
+                                <i className="bi bi-moon-stars-fill"></i>
+                                <span className="fs-7 fw-medium" style={{ fontSize: '0.85rem' }}>Dark</span>
+                            </motion.button>
                         </div>
                     </div>
                 </div>
 
-                <div className="sidebar-menu">
+                <div className="sidebar-menu px-3 mt-3">
                     <ul className="menu">
                         {MENU.map((item) => {
                             if (!hasPermission(item.permission)) return null;
@@ -171,11 +181,17 @@ export default function Sidebar({ isActive = true, onToggle }) {
                             if (!item.children) {
                                 const active = isActiveRoute(item);
                                 return (
-                                    <li key={item.label} className={`sidebar-item${active ? ' active' : ''}`}>
-                                        <Link href={route(item.route)} className="sidebar-link">
-                                            <i className={`bi ${item.icon}`}></i>
-                                            <span>{item.label}</span>
-                                        </Link>
+                                    <li key={item.label} className={`sidebar-item${active ? ' active' : ''} mb-1`}>
+                                        <motion.div whileTap={{ scale: 0.98 }}>
+                                            <Link 
+                                                href={route(item.route)} 
+                                                className="sidebar-link d-flex align-items-center gap-3 py-2 px-3 rounded-3 transition-all"
+                                                style={{ display: 'flex', textDecoration: 'none' }}
+                                            >
+                                                <i className={`bi ${item.icon} fs-5`}></i>
+                                                <span className="fw-medium">{item.label}</span>
+                                            </Link>
+                                        </motion.div>
                                     </li>
                                 );
                             }
@@ -188,31 +204,64 @@ export default function Sidebar({ isActive = true, onToggle }) {
                             const isOpen = openMenus[item.label] ?? parentActive;
 
                             return (
-                                <li key={item.label} className={`sidebar-item has-sub${parentActive ? ' active' : ''}${isOpen ? ' open' : ''}`}>
-                                    <a href="#" className="sidebar-link"
-                                        onClick={(e) => { e.preventDefault(); toggleMenu(item.label); }}>
-                                        <i className={`bi ${item.icon}`}></i>
-                                        <span>{item.label}</span>
-                                    </a>
-                                    <ul className={`submenu ${isOpen ? 'submenu-open' : 'submenu-closed'}`} style={{ display: isOpen ? 'block' : 'none', height: isOpen ? 'auto' : 0 }}>
-                                        {visibleChildren.map(child => {
-                                            const childActive = isActiveRoute(child);
-                                            return (
-                                                <li key={child.route} className={`submenu-item${childActive ? ' active' : ''}`}>
-                                                    <Link href={route(child.route)} className="submenu-link">
-                                                        <i className={`bi ${child.icon} me-2`}></i>
-                                                        {child.label}
-                                                    </Link>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
+                                <li key={item.label} className={`sidebar-item${parentActive ? ' active' : ''} mb-1`}>
+                                    <motion.a 
+                                        whileTap={{ scale: 0.98 }}
+                                        href="#" 
+                                        className="sidebar-link d-flex align-items-center justify-content-between py-2 px-3 rounded-3 transition-all"
+                                        onClick={(e) => { e.preventDefault(); toggleMenu(item.label); }}
+                                    >
+                                        <div className="d-flex align-items-center gap-3">
+                                            <i className={`bi ${item.icon} fs-5`}></i>
+                                            <span className="fw-medium">{item.label}</span>
+                                        </div>
+                                        <motion.i 
+                                            animate={{ rotate: isOpen ? 180 : 0 }} 
+                                            transition={{ duration: 0.2 }}
+                                            className="bi bi-chevron-down opacity-50" 
+                                            style={{ fontSize: '0.8rem' }}
+                                        ></motion.i>
+                                    </motion.a>
+                                    
+                                    <AnimatePresence initial={false}>
+                                        {isOpen && (
+                                            <motion.ul 
+                                                initial="collapsed"
+                                                animate="open"
+                                                exit="collapsed"
+                                                variants={{
+                                                    open: { opacity: 1, height: "auto", marginTop: "0.25rem" },
+                                                    collapsed: { opacity: 0, height: 0, marginTop: 0 }
+                                                }}
+                                                transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                                                className="m-0 p-0 ps-4"
+                                                style={{ overflow: 'hidden', listStyle: 'none', display: 'block' }}
+                                            >
+                                                {visibleChildren.map(child => {
+                                                    const childActive = isActiveRoute(child);
+                                                    return (
+                                                        <li key={child.route} className={`mb-1`}>
+                                                            <motion.div whileTap={{ scale: 0.98 }}>
+                                                                <Link 
+                                                                    href={route(child.route)} 
+                                                                    className={`d-flex align-items-center gap-3 py-2 px-3 rounded-3 transition-all ${childActive ? 'fw-semibold text-primary' : 'text-body-secondary'}`}
+                                                                    style={{ textDecoration: 'none' }}
+                                                                >
+                                                                    <i className={`bi ${child.icon}`} style={{ fontSize: '1.1rem' }}></i>
+                                                                    <span style={{ fontSize: '0.95rem' }}>{child.label}</span>
+                                                                </Link>
+                                                            </motion.div>
+                                                        </li>
+                                                    );
+                                                })}
+                                            </motion.ul>
+                                        )}
+                                    </AnimatePresence>
                                 </li>
                             );
                         })}
                     </ul>
                 </div>
-
             </div>
         </div>
     );

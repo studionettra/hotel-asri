@@ -27,6 +27,11 @@ export default function DatePicker({ value, onChange, min, max, className = '', 
         return null;
     };
 
+    const onChangeRef = useRef(onChange);
+    useEffect(() => {
+        onChangeRef.current = onChange;
+    }, [onChange]);
+
     useEffect(() => {
         if (!inputRef.current) return;
         
@@ -38,15 +43,15 @@ export default function DatePicker({ value, onChange, min, max, className = '', 
             maxDate: parseToDateObj(max),
             allowInput: true,
             onChange: (selectedDates) => {
-                if (onChange) {
+                if (onChangeRef.current) {
                     if (selectedDates.length > 0) {
                         const date = selectedDates[0];
                         const y = date.getFullYear();
                         const m = String(date.getMonth() + 1).padStart(2, '0');
                         const d = String(date.getDate()).padStart(2, '0');
-                        onChange({ target: { value: `${y}-${m}-${d}` } });
+                        onChangeRef.current({ target: { value: `${y}-${m}-${d}` } });
                     } else {
-                        onChange({ target: { value: '' } });
+                        onChangeRef.current({ target: { value: '' } });
                     }
                 }
             }
