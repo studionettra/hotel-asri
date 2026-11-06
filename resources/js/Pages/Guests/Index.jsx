@@ -97,8 +97,9 @@ function GuestModal({ guest, onClose }) {
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label">No. Member Card</label>
-                                    <input type="text" className="form-control" value={data.member_card_no}
+                                    <input type="text" className={`form-control${errors.member_card_no ? ' is-invalid' : ''}`} value={data.member_card_no}
                                         onChange={e => setData('member_card_no', e.target.value)} />
+                                    {errors.member_card_no && <div className="invalid-feedback">{errors.member_card_no}</div>}
                                 </div>
                                 <div className="col-12">
                                     <label className="form-label">Alamat</label>

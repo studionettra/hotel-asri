@@ -26,7 +26,7 @@ class StoreGuestRequest extends FormRequest
             'gender'       => ['nullable', Rule::in(['male', 'female'])],
             'profession'   => ['nullable', 'string'],
             'company'      => ['nullable', 'string'],
-            'member_card_no'=> ['nullable', 'string'],
+            'member_card_no'=> ['nullable', 'string', Rule::unique('guests', 'member_card_no')->ignore($this->guest)],
         ];
     }
 }
