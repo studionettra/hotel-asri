@@ -13,8 +13,8 @@ export default function Confirmed({ booking }) {
     const charges = folio?.charges || [];
     
     // Aggregate dates and nights
-    const arrivalDate = firstRes ? new Date(firstRes.check_in_date).toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) : '';
-    const departureDate = firstRes ? new Date(firstRes.check_out_date).toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) : '';
+    const arrivalDate = firstRes ? new Date(firstRes.check_in_date).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'}) : '';
+    const departureDate = firstRes ? new Date(firstRes.check_out_date).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'}) : '';
     const totalNight = firstRes ? Math.round((new Date(firstRes.check_out_date) - new Date(firstRes.check_in_date)) / (1000 * 60 * 60 * 24)) : 0;
     
     // Combine room types & adults
@@ -22,7 +22,6 @@ export default function Confirmed({ booking }) {
     const uniqueRoomTypes = [...new Set(roomTypesList)];
     const roomTypes = uniqueRoomTypes.length > 0 ? uniqueRoomTypes.join(', ') : '';
     const totalGuest = booking.reservations ? booking.reservations.reduce((sum, r) => sum + r.adults, 0) : 0;
-    const roomRate = firstRes ? firstRes.room_type?.base_price : 0;
 
     // Calculate Payment Breakdown
     let roomCharge = 0;
@@ -44,237 +43,200 @@ export default function Confirmed({ booking }) {
     const grandTotal = Number(booking.total_amount);
 
     return (
-        <div className="bg-light min-vh-100 py-5 print-bg-white">
+        <div className="min-vh-100 py-5 print-bg-white">
             <Head title="Reservation Confirmation" />
             
             <div className="container print-container" style={{ maxWidth: '850px' }}>
-                <div className="d-flex justify-content-between align-items-center mb-4 d-print-none">
-                    <Link href={route('availability.index')} className="btn btn-outline-secondary">
+                {/* Top Action Bar */}
+                <div className="d-flex justify-content-between align-items-center mb-5 d-print-none">
+                    <Link href={route('availability.index')} className="btn btn-outline-secondary px-4">
                         <i className="bi bi-arrow-left me-2"></i> Kembali ke Beranda
                     </Link>
-                    <button className="btn btn-primary" onClick={handlePrint}>
+                    <button className="btn btn-primary px-4 shadow-sm" onClick={handlePrint}>
                         <i className="bi bi-printer me-2"></i> Cetak Reservasi
                     </button>
                 </div>
 
-                <div className="card shadow border-0" id="print-area">
-                    <div className="card-body p-4 p-md-5 print-document">
+                <div className="card shadow-sm border-0 print-no-border print-no-shadow" id="print-area">
+                    <div className="card-body p-5 print-p-0">
                         
-                        {/* 1. Header */}
-                        <div className="d-flex justify-content-between align-items-center print-mb-3 mb-5 pb-3 border-bottom print-header">
-                            <div className="d-flex align-items-center gap-3">
-                                <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri Logo" className="print-logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
-                                <div>
-                                    <h3 className="fw-bold mb-0 text-primary print-title">HOTEL ASRI</h3>
-                                    <small className="text-muted d-block">Hospitality Excellence</small>
-                                </div>
+                        {/* Header: Logo & Booking Status */}
+                        <div className="row align-items-center mb-5 pb-4 border-bottom">
+                            <div className="col-sm-6 mb-4 mb-sm-0 text-center text-sm-start">
+                                <img src="/mazer/images/logo/logo-hotel-asri.png" alt="Hotel Asri" className="print-logo mb-2" style={{ height: '48px', objectFit: 'contain' }} />
+                                <div className="text-muted small" style={{ letterSpacing: '0.5px' }}>Jl. Raya Condet No. 1, Jakarta Timur<br/>+62 21 1234 5678</div>
                             </div>
-                            <div className="text-end">
-                                <h6 className="fw-bold text-uppercase mb-1 print-subtitle" style={{ letterSpacing: '1px' }}>Reservation Confirmation</h6>
-                                <div className="text-muted mb-1 print-text-sm">Booking No: <strong>{booking.booking_code}</strong></div>
-                                <div className="text-muted mb-1 print-text-sm">Date: {new Date(booking.created_at).toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'})}</div>
-                                <span className="badge bg-success mt-1 px-3 py-1 print-badge">CONFIRMED</span>
+                            <div className="col-sm-6 text-center text-sm-end">
+                                <h4 className="fw-bold mb-1 text-uppercase tracking-wider">Reservation Confirmed</h4>
+                                <div className="text-muted">Booking Ref: <strong className="text-body">{booking.booking_code}</strong></div>
+                                <div className="text-muted small mt-1">Date: {new Date(booking.created_at).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'})}</div>
                             </div>
                         </div>
 
-                        {/* 2 & 3. Guest and Stay Information (Compact 2 Rows) */}
-                        <div className="print-mb-3 mb-5 border rounded p-3 ">
-                            {/* Baris 1: Guest */}
-                            <div className="row g-3 align-items-center mb-2 print-text-sm">
-                                <div className="col-auto">
-                                    <span className="me-1">Name:</span>
-                                    <strong className="fw-bold">{guest.full_name || '-'}</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Company:</span>
-                                    <strong className="fw-bold">{guest.company || '-'}</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Email:</span>
-                                    <strong className="fw-bold">{guest.email || '-'}</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Phone:</span>
-                                    <strong className="fw-bold">{guest.phone || '-'}</strong>
+                        {/* Details Section: CSS Grid */}
+                        <div className="row g-4 mb-5 pb-4 border-bottom">
+                            <div className="col-12">
+                                <h6 className="fw-bold text-uppercase text-muted mb-4" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>Guest Details</h6>
+                                <div className="row g-4">
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Primary Guest</div>
+                                        <div className="fw-medium text-body">{guest.full_name || '-'}</div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Contact Phone</div>
+                                        <div className="fw-medium text-body">{guest.phone || '-'}</div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Email Address</div>
+                                        <div className="fw-medium text-body">{guest.email || '-'}</div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Company</div>
+                                        <div className="fw-medium text-body">{guest.company || '-'}</div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <hr className="my-2 border-secondary opacity-25" />
-                            
-                            {/* Baris 2: Stay */}
-                            <div className="row g-3 align-items-center mt-0 print-text-sm">
-                                <div className="col-auto">
-                                    <span className="me-1">Check In:</span>
-                                    <strong className="fw-bold">{arrivalDate}</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Check Out:</span>
-                                    <strong className="fw-bold">{departureDate}</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Duration:</span>
-                                    <strong className="fw-bold">{totalNight} Night(s)</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Guest:</span>
-                                    <strong className="fw-bold">{totalGuest} Pax</strong>
-                                </div>
-                                <div className="col-auto border-start">
-                                    <span className="me-1">Room:</span>
-                                    <strong className="fw-bold">{roomTypes}</strong>
+                            <div className="col-12 mt-5">
+                                <h6 className="fw-bold text-uppercase text-muted mb-4" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>Stay Information</h6>
+                                <div className="row g-4">
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Check-in</div>
+                                        <div className="fw-medium text-body">{arrivalDate} <span className="text-muted fw-normal">(14:00)</span></div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Check-out</div>
+                                        <div className="fw-medium text-body">{departureDate} <span className="text-muted fw-normal">(12:00)</span></div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Duration & Pax</div>
+                                        <div className="fw-medium text-body">{totalNight} Night(s) <span className="text-muted mx-1">·</span> {totalGuest} Guest(s)</div>
+                                    </div>
+                                    <div className="col-sm-3 col-6">
+                                        <div className="text-muted small mb-1">Room Types</div>
+                                        <div className="fw-medium text-body">{roomTypes}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* 4. Payment Summary */}
-                        <div className="print-mb-3 mb-5">
-                            <h6 className="fw-bold text-uppercase text-secondary mb-2 pb-1 border-bottom print-section-title">Payment Summary</h6>
+                        {/* Payment Summary */}
+                        <div className="mb-5">
+                            <h6 className="fw-bold text-uppercase text-muted mb-3" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>Charges Summary</h6>
                             <div className="table-responsive">
-                                <table className="table table-bordered table-sm mb-0 summary-table">
-                                    <thead className="table-light">
-                                        <tr>
-                                            <th>Description</th>
-                                            <th className="text-end" style={{ width: '250px' }}>Amount (IDR)</th>
+                                <table className="table align-middle text-body">
+                                    <thead>
+                                        <tr className="border-top border-bottom text-muted" style={{ fontSize: '0.9rem' }}>
+                                            <th className="fw-normal py-3 border-0">Description</th>
+                                            <th className="fw-normal py-3 border-0 text-end" style={{ width: '200px' }}>Amount (IDR)</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="border-bottom">
                                         {charges.length > 0 ? (
                                             <>
                                                 <tr>
-                                                    <td className="py-1">Room Charge</td>
-                                                    <td className="text-end py-1">{roomCharge.toLocaleString('id-ID')}</td>
+                                                    <td className="py-3 border-0">Room Charge</td>
+                                                    <td className="py-3 border-0 text-end fw-medium">{roomCharge.toLocaleString('id-ID')}</td>
                                                 </tr>
                                                 {additionalCharge > 0 && (
                                                     <tr>
-                                                        <td className="py-1">Additional Charge (Extra Bed, F&B, dll)</td>
-                                                        <td className="text-end py-1">{additionalCharge.toLocaleString('id-ID')}</td>
+                                                        <td className="py-3 border-0">Additional Charge (Extra Bed, F&B)</td>
+                                                        <td className="py-3 border-0 text-end fw-medium">{additionalCharge.toLocaleString('id-ID')}</td>
                                                     </tr>
                                                 )}
                                                 <tr>
-                                                    <td className="py-1">Service Charge (10%)</td>
-                                                    <td className="text-end py-1">{serviceCharge.toLocaleString('id-ID')}</td>
+                                                    <td className="py-3 border-0">Service Charge (10%)</td>
+                                                    <td className="py-3 border-0 text-end fw-medium">{serviceCharge.toLocaleString('id-ID')}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="py-1">Tax (11%)</td>
-                                                    <td className="text-end py-1">{tax.toLocaleString('id-ID')}</td>
+                                                    <td className="py-3 border-0">Tax (11%)</td>
+                                                    <td className="py-3 border-0 text-end fw-medium">{tax.toLocaleString('id-ID')}</td>
                                                 </tr>
                                             </>
                                         ) : (
                                             <tr>
-                                                <td className="py-1">Total Booking Charge</td>
-                                                <td className="text-end py-1">{grandTotal.toLocaleString('id-ID')}</td>
+                                                <td className="py-3 border-0">Total Booking Charge</td>
+                                                <td className="py-3 border-0 text-end fw-medium">{grandTotal.toLocaleString('id-ID')}</td>
                                             </tr>
                                         )}
                                     </tbody>
                                     <tfoot>
-                                        <tr className="table-primary">
-                                            <th className="text-end py-2">GRAND TOTAL</th>
-                                            <th className="text-end py-2 fw-bold fs-6 print-grand-total">Rp {grandTotal.toLocaleString('id-ID')}</th>
+                                        <tr>
+                                            <td className="py-4 border-0 text-end fw-bold text-muted" style={{ fontSize: '1.1rem' }}>GRAND TOTAL</td>
+                                            <td className="py-4 border-0 text-end fw-bold text-body" style={{ fontSize: '1.25rem' }}>Rp {grandTotal.toLocaleString('id-ID')}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
 
-                        <div className="row g-4 print-mb-3 mb-5">
-                            {/* 5. Payment Method */}
+                        {/* Footer Info: Payment Method & Notes */}
+                        <div className="row g-5">
                             <div className="col-sm-6">
-                                <h6 className="fw-bold text-uppercase text-secondary mb-2 pb-1 border-bottom print-section-title">Payment Method</h6>
-                                <div className="p-4 border border-success rounded payment-box">
-                                    <div className="fw-bold mb-1 text-uppercase text-primary print-text-sm">
-                                        <i className="bi bi-credit-card me-2"></i>
-                                        {booking.payment_method || 'Cash'}
-                                    </div>
-                                    <div className="text-success fw-medium mb-1 print-text-sm">
-                                        <i className="bi bi-check-circle-fill me-2"></i>Payment Status: PAID
+                                <h6 className="fw-bold text-uppercase text-muted mb-3" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>Payment Details</h6>
+                                <div>
+                                    <div className="mb-2 d-flex align-items-center">
+                                        <span className="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1 fw-medium d-inline-flex align-items-center">
+                                            <i className="bi bi-check-circle-fill me-2"></i> Paid via {booking.payment_method || 'Cash'}
+                                        </span>
                                     </div>
                                     {String(booking.payment_method).toLowerCase() === 'bank transfer' && (
-                                        <div className="small text-muted mt-2 print-text-sm" style={{ lineHeight: '1.3' }}>
-                                            <div>Settled via Transfer to:</div>
-                                            <strong>Bank Mandiri</strong><br/>
-                                            A/N: Hotel Asri Jakarta<br/>
+                                        <div className="text-muted small" style={{ lineHeight: '1.6' }}>
+                                            Settled via Transfer to:<br/>
+                                            <strong className="text-body">Bank Mandiri</strong> (A/N: Hotel Asri)<br/>
                                             Rek: 123-456-789-000
                                         </div>
                                     )}
                                 </div>
                             </div>
-
-                            {/* 7. Hotel Information */}
                             <div className="col-sm-6">
-                                <h6 className="fw-bold text-uppercase text-secondary mb-2 pb-1 border-bottom print-section-title">Hotel Information</h6>
-                                <div className="p-2 print-text-sm" style={{ lineHeight: '1.4' }}>
-                                    <div className="mb-1"><i className="bi bi-geo-alt text-muted me-2"></i> Jl. Raya Condet No. 1, Jakarta Timur</div>
-                                    <div className="mb-1"><i className="bi bi-telephone text-muted me-2"></i> +62 21 1234 5678</div>
-                                    <div className="mb-1"><i className="bi bi-envelope text-muted me-2"></i> reservation@hotelasri.com</div>
-                                    <div><i className="bi bi-globe text-muted me-2"></i> www.hotelasri.com</div>
-                                </div>
+                                <h6 className="fw-bold text-uppercase text-muted mb-3" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>Important Notes</h6>
+                                <ul className="text-muted small ps-3 mb-0" style={{ lineHeight: '1.6' }}>
+                                    <li className="mb-1">Check-in time is from <strong className="text-body">14:00</strong> and Check-out time is until <strong className="text-body">12:00</strong>.</li>
+                                    <li className="mb-1">Tamu diwajibkan untuk menunjukkan kartu identitas resmi pada saat kedatangan.</li>
+                                    <li>Reservasi ini tidak dapat dibatalkan (non-refundable) tanpa pemberitahuan 24 jam sebelumnya.</li>
+                                </ul>
                             </div>
                         </div>
 
-                        {/* 8. Important Information */}
-                        <div className="mt-auto pt-3 border-top print-footer">
-                            <h6 className="fw-bold text-uppercase text-secondary mb-2 print-section-title">Important Information</h6>
-                            <ul className="text-muted small ps-3 mb-0 print-text-xs" style={{ lineHeight: '1.4' }}>
-                                <li>Check-in time is from <strong>14:00</strong> and Check-out time is until <strong>12:00</strong>.</li>
-                                <li>Reservasi tanpa jaminan (non-guaranteed) akan otomatis dibatalkan pada pukul 18:00 pada hari kedatangan.</li>
-                                <li>Pembatalan reservasi yang dilakukan H-1 (kurang dari 24 jam) akan dikenakan biaya pembatalan sebesar 1 malam.</li>
-                                <li>Tamu diwajibkan untuk menunjukkan kartu identitas (KTP/Paspor) yang masih berlaku pada saat check-in.</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <style>{`
-                .info-table th { font-weight: normal; padding-left: 0; }
-                .info-table td { padding-right: 0; }
-                .summary-table th { background-color: #f8f9fa !important; }
+                .tracking-wider { letter-spacing: 0.05em; }
                 
                 @media print {
                     @page { size: A4 portrait; margin: 15mm; }
-                    body { background-color: white !important; }
+                    body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
                     .print-bg-white { background-color: white !important; padding: 0 !important; }
-                    .print-container { max-width: 100% !important; width: 100% !important; padding: 0 !important; }
+                    .print-container { display: block !important; max-width: 100% !important; width: 100% !important; padding: 0 !important; }
                     .d-print-none { display: none !important; }
-                    #sidebar, .sidebar-wrapper, header { display: none !important; }
+                    #sidebar, .sidebar-wrapper, header, .page-title { display: none !important; }
                     #main { margin-left: 0 !important; padding: 0 !important; }
                     
-                    /* Reset spacing */
-                    .card { box-shadow: none !important; border: none !important; margin: 0 !important; }
-                    .card-body { padding: 0 !important; }
-                    .print-mb-3 { margin-bottom: 1.5rem !important; }
-                    .mb-5 { margin-bottom: 1.5rem !important; }
-                    .mt-auto { margin-top: 1.5rem !important; }
+                    /* Clean up print artifacts */
+                    .print-no-border { border: none !important; }
+                    .print-no-shadow { box-shadow: none !important; }
+                    .print-p-0 { padding: 0 !important; }
                     
-                    /* Typography & Colors */
-                    body, .print-document { 
-                        font-family: 'Inter', 'Roboto', sans-serif !important; 
+                    /* Typography Force Black for Printer */
+                    body, .card-body, * { 
                         color: #000 !important;
-                        font-size: 10pt !important;
+                        font-family: 'Inter', 'Helvetica Neue', sans-serif !important; 
                     }
-                    .text-muted, .text-secondary { color: #444 !important; }
-                    .text-primary { color: #000 !important; }
+                    .text-muted { color: #555 !important; }
+                    .text-body { color: #000 !important; }
+                    .badge { 
+                        color: #000 !important; 
+                        border-color: #000 !important; 
+                        background-color: transparent !important; 
+                    }
+                    .card { background-color: transparent !important; }
                     
-                    /* Sizes */
-                    .print-logo { height: 45px !important; }
-                    .print-title { font-size: 16pt !important; }
-                    .print-subtitle { font-size: 14pt !important; }
-                    .print-section-title { font-size: 11pt !important; }
-                    .print-text-sm { font-size: 9pt !important; }
-                    .print-text-xs { font-size: 8.5pt !important; }
-                    .print-grand-total { font-size: 12pt !important; }
-                    .print-badge { padding: 2px 8px !important; font-size: 8pt !important; border-radius: 4px; }
-                    
-                    /* Tables */
+                    /* Ensure tables print properly */
                     .table { margin-bottom: 0 !important; }
-                    .table-sm th, .table-sm td { padding: 0.2rem 0.2rem !important; }
-                    .table-bordered th, .table-bordered td { border-color: #ddd !important; }
-                    .table-light th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-                    .table-primary th { background-color: #e6f2ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-top: 2px solid #000 !important; }
-                    
-                    /* Boxes */
-                    .payment-box { border: 1px solid #ddd !important; background-color: transparent !important; padding: 0.5rem !important; }
-                    .badge { border: 1px solid #000; color: #000 !important; background-color: transparent !important; }
+                    .table th, .table td { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; border-color: #888 !important; }
                 }
             `}</style>
         </div>
