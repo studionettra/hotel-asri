@@ -6,9 +6,9 @@ export default function AuthLayout({ children, title }) {
             <Head title={title} />
             <link rel="stylesheet" href="/dist/assets/compiled/css/auth.css" />
             <div id="auth">
-                <div className="row h-100">
-                    <div className="col-lg-5 col-12">
-                        <div id="auth-left">
+                <div className="row h-100 g-0">
+                    <div className="col-lg-5 col-12" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+                        <div id="auth-left" style={{ padding: '3.5rem 3rem' }}>
                             {children}
                         </div>
                     </div>

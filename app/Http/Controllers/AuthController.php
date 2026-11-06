@@ -14,7 +14,51 @@ class AuthController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return Inertia::render('Auth/Login');
+        $demoMode = (bool) config('app.demo_mode', env('DEMO_MODE', true));
+
+        $demoAccounts = $demoMode ? [
+            [
+                'role' => 'Administrator',
+                'username' => 'admin',
+                'password' => 'admin12345',
+                'badge' => 'GM / Admin',
+                'desc' => 'Finansial & Master Data',
+                'icon' => 'bi-shield-check',
+                'color' => 'primary',
+            ],
+            [
+                'role' => 'Front Office',
+                'username' => 'fo1',
+                'password' => 'fo12345',
+                'badge' => 'Front Desk',
+                'desc' => 'Reservasi & Billing',
+                'icon' => 'bi-person-badge',
+                'color' => 'success',
+            ],
+            [
+                'role' => 'Housekeeping',
+                'username' => 'hk1',
+                'password' => 'hk12345',
+                'badge' => 'HK Staff',
+                'desc' => 'Status Kamar & Laundry',
+                'icon' => 'bi-brush',
+                'color' => 'warning',
+            ],
+            [
+                'role' => 'F&B Service',
+                'username' => 'fnb1',
+                'password' => 'fnb12345',
+                'badge' => 'F&B Team',
+                'desc' => 'Restoran & Room Service',
+                'icon' => 'bi-cup-hot',
+                'color' => 'info',
+            ],
+        ] : [];
+
+        return Inertia::render('Auth/Login', [
+            'demoAccounts' => $demoAccounts,
+            'demoMode' => $demoMode,
+        ]);
     }
 
     public function store(Request $request)
