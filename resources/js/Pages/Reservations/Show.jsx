@@ -95,22 +95,24 @@ export default function Show({ reservation, menuItems }) {
                             </span>
                         </div>
                         <div className="card-body">
-                            <table className="table table-sm">
-                                <tbody>
-                                    <tr><th style={{width:'40%'}}>Tamu</th><td>{reservation.guest?.full_name}</td></tr>
-                                    <tr><th>Tipe Kamar</th><td>{reservation.room_type?.name}</td></tr>
-                                    <tr><th>Kamar</th><td>{reservation.room?.room_number ?? <em className="text-muted">Belum ditentukan</em>}</td></tr>
-                                    <tr><th>Check-In</th><td>{formatTanggal(reservation.check_in_date)}</td></tr>
-                                    <tr><th>Check-Out</th><td>{formatTanggal(reservation.check_out_date)}</td></tr>
-                                    <tr><th>Durasi</th><td>{nights} malam</td></tr>
-                                    <tr><th>Dewasa</th><td>{reservation.adults}</td></tr>
-                                    <tr><th>Anak-anak</th><td>{reservation.children}</td></tr>
-                                    <tr><th>Channel</th><td>{reservation.channel}</td></tr>
-                                    <tr><th>Total</th><td><strong>{formatRp(reservation.total_amount)}</strong></td></tr>
-                                    <tr><th>Dibuat oleh</th><td>{reservation.created_by?.name ?? '-'}</td></tr>
-                                    <tr><th>Permintaan Khusus</th><td>{reservation.special_request || '-'}</td></tr>
-                                </tbody>
-                            </table>
+                            <div className="table-responsive">
+                                <table className="table table-sm mb-0">
+                                    <tbody>
+                                        <tr><th style={{ minWidth: '120px', width: '35%' }}>Tamu</th><td>{reservation.guest?.full_name}</td></tr>
+                                        <tr><th>Tipe Kamar</th><td>{reservation.room_type?.name}</td></tr>
+                                        <tr><th>Kamar</th><td>{reservation.room?.room_number ?? <em className="text-muted">Belum ditentukan</em>}</td></tr>
+                                        <tr><th>Check-In</th><td>{formatTanggal(reservation.check_in_date)}</td></tr>
+                                        <tr><th>Check-Out</th><td>{formatTanggal(reservation.check_out_date)}</td></tr>
+                                        <tr><th>Durasi</th><td>{nights} malam</td></tr>
+                                        <tr><th>Dewasa</th><td>{reservation.adults}</td></tr>
+                                        <tr><th>Anak-anak</th><td>{reservation.children}</td></tr>
+                                        <tr><th>Channel</th><td>{reservation.channel}</td></tr>
+                                        <tr><th>Total</th><td><strong>{formatRp(reservation.total_amount)}</strong></td></tr>
+                                        <tr><th>Dibuat oleh</th><td>{reservation.created_by?.name ?? '-'}</td></tr>
+                                        <tr><th>Permintaan Khusus</th><td>{reservation.special_request || '-'}</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

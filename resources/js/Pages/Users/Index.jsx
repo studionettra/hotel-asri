@@ -30,42 +30,52 @@ export default function Index({ users, roles }) {
                         <input type="text" className="form-control" placeholder="Cari nama atau username..."
                             value={search} onChange={e => setSearch(e.target.value)} style={{ maxWidth: 300 }} />
                     </div>
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr><th>#</th><th>Nama</th><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Aksi</th></tr>
-                        </thead>
-                        <tbody>
-                            {filtered.length === 0 && (
-                                <tr><td colSpan={7} className="text-center text-muted">Tidak ada data user.</td></tr>
-                            )}
-                            {filtered.map((user, i) => (
-                                <tr key={user.id}>
-                                    <td>{i + 1}</td>
-                                    <td>{user.name}</td>
-                                    <td><code>{user.username}</code></td>
-                                    <td>{user.email}</td>
-                                    <td>
-                                        {user.roles?.map(r => (
-                                            <span key={r.id} className="badge bg-info text-dark me-1">{r.name}</span>
-                                        ))}
-                                    </td>
-                                    <td>
-                                        <span className={`badge bg-${user.is_active ? 'success' : 'secondary'}`}>
-                                            {user.is_active ? 'Aktif' : 'Non-aktif'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <Link href={route('users.edit', user.id)} className="btn btn-sm btn-warning me-1">
-                                            <i className="bi bi-pencil"></i>
-                                        </Link>
-                                        <button className="btn btn-sm btn-danger" onClick={() => destroy(user)}>
-                                            <i className="bi bi-trash"></i>
-                                        </button>
-                                    </td>
+                    <div className="table-responsive">
+                        <table className="table table-striped table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '5%', minWidth: '40px' }}>#</th>
+                                    <th style={{ width: '20%', minWidth: '140px' }}>Nama</th>
+                                    <th style={{ width: '15%', minWidth: '110px' }}>Username</th>
+                                    <th style={{ width: '22%', minWidth: '160px' }}>Email</th>
+                                    <th style={{ width: '15%', minWidth: '120px' }}>Role</th>
+                                    <th style={{ width: '11%', minWidth: '100px' }}>Status</th>
+                                    <th style={{ width: '12%', minWidth: '90px' }}>Aksi</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {filtered.length === 0 && (
+                                    <tr><td colSpan={7} className="text-center text-muted py-4">Tidak ada data user.</td></tr>
+                                )}
+                                {filtered.map((user, i) => (
+                                    <tr key={user.id}>
+                                        <td>{i + 1}</td>
+                                        <td><strong>{user.name}</strong></td>
+                                        <td><code>{user.username}</code></td>
+                                        <td>{user.email}</td>
+                                        <td>
+                                            {user.roles?.map(r => (
+                                                <span key={r.id} className="badge bg-info text-dark me-1">{r.name}</span>
+                                            ))}
+                                        </td>
+                                        <td>
+                                            <span className={`badge bg-${user.is_active ? 'success' : 'secondary'}`}>
+                                                {user.is_active ? 'Aktif' : 'Non-aktif'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <Link href={route('users.edit', user.id)} className="btn btn-sm btn-warning me-1">
+                                                <i className="bi bi-pencil"></i>
+                                            </Link>
+                                            <button className="btn btn-sm btn-danger" onClick={() => destroy(user)}>
+                                                <i className="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </AppLayout>

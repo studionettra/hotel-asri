@@ -235,13 +235,13 @@ export default function Index({ categories }) {
                         <table className="table table-hover align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th className="ps-4" style={{ width: '10%' }}>Kode</th>
-                                    <th style={{ width: '22%' }}>Nama</th>
-                                    <th style={{ width: '33%' }}>Deskripsi</th>
-                                    <th style={{ width: '10%' }}>Satuan</th>
-                                    <th className="text-end" style={{ width: '12%' }}>Harga</th>
-                                    <th className="text-center" style={{ width: '8%' }}>Tersedia</th>
-                                    <th className="text-center pe-4" style={{ width: '5%' }}>Aksi</th>
+                                    <th style={{ width: '10%', minWidth: '90px', paddingLeft: '1.5rem' }}>Kode</th>
+                                    <th style={{ width: '22%', minWidth: '150px' }}>Nama</th>
+                                    <th style={{ width: '33%', minWidth: '180px' }}>Deskripsi</th>
+                                    <th style={{ width: '10%', minWidth: '80px' }}>Satuan</th>
+                                    <th className="text-end" style={{ width: '12%', minWidth: '100px' }}>Harga</th>
+                                    <th className="text-center" style={{ width: '8%', minWidth: '85px' }}>Tersedia</th>
+                                    <th className="text-center" style={{ width: '5%', minWidth: '80px', paddingRight: '1.5rem' }}>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

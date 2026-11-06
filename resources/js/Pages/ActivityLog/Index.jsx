@@ -58,12 +58,12 @@ export default function Index({ logs, users, filters }) {
                     <table className="table table-hover table-sm mb-0">
                         <thead>
                             <tr>
-                                <th>Waktu</th>
-                                <th>Pengguna</th>
-                                <th>Event</th>
-                                <th>Model</th>
-                                <th>ID</th>
-                                <th>Detail</th>
+                                <th style={{ width: '15%', minWidth: '140px', paddingLeft: '1.25rem' }}>Waktu</th>
+                                <th style={{ width: '15%', minWidth: '120px' }}>Pengguna</th>
+                                <th style={{ width: '12%', minWidth: '100px' }}>Event</th>
+                                <th style={{ width: '12%', minWidth: '100px' }}>Model</th>
+                                <th style={{ width: '8%', minWidth: '60px' }}>ID</th>
+                                <th style={{ width: '38%', minWidth: '200px', paddingRight: '1.25rem' }}>Detail</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,9 +105,9 @@ export default function Index({ logs, users, filters }) {
                     </table>
                 </div>
                 {logs.last_page > 1 && (
-                    <div className="card-footer d-flex justify-content-between align-items-center">
+                    <div className="card-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <small className="text-muted">Menampilkan {logs.from}–{logs.to} dari {logs.total} log</small>
-                        <div className="d-flex gap-1">
+                        <div className="d-flex gap-1 flex-wrap">
                             {logs.links.map((link, i) => (
                                 <button key={i} className={`btn btn-sm ${link.active ? 'btn-primary' : 'btn-outline-secondary'}`}
                                     disabled={!link.url}

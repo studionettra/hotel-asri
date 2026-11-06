@@ -309,20 +309,22 @@ export default function Edit({ reservation, guests, roomTypes }) {
                         <div className="card sticky-top" style={{ top: '2rem' }}>
                             <div className="card-header"><h4 className="card-title">Ringkasan</h4></div>
                             <div className="card-body">
-                                <table className="table table-sm">
-                                    <tbody>
-                                        <tr><th>Tamu</th><td>{data.guest.full_name || '-'}</td></tr>
-                                        <tr><th>Tipe Kamar</th><td>{selectedType?.name ?? '-'}</td></tr>
-                                        <tr><th>Check-In</th><td>{formatTanggal(data.check_in_date)}</td></tr>
-                                        <tr><th>Check-Out</th><td>{formatTanggal(data.check_out_date)}</td></tr>
-                                        <tr><th>Durasi</th><td>{nights > 0 ? `${nights} malam` : '-'}</td></tr>
-                                        <tr><th>Harga/Malam</th><td>{selectedType ? formatRp(selectedType.base_price) : '-'}</td></tr>
-                                        <tr><th>Subtotal</th><td>{formatRp(subTotal)}</td></tr>
-                                        <tr><th>Service (10%)</th><td>{formatRp(serviceCharge)}</td></tr>
-                                        <tr><th>Pajak (11%)</th><td>{formatRp(tax)}</td></tr>
-                                        <tr><th>Total Estimasi</th><td className="text-primary fw-bold">{formatRp(grandTotal)}</td></tr>
-                                    </tbody>
-                                </table>
+                                <div className="table-responsive">
+                                    <table className="table table-sm mb-0">
+                                        <tbody>
+                                            <tr><th style={{ minWidth: '110px' }}>Tamu</th><td>{data.guest.full_name || '-'}</td></tr>
+                                            <tr><th>Tipe Kamar</th><td>{selectedType?.name ?? '-'}</td></tr>
+                                            <tr><th>Check-In</th><td>{formatTanggal(data.check_in_date)}</td></tr>
+                                            <tr><th>Check-Out</th><td>{formatTanggal(data.check_out_date)}</td></tr>
+                                            <tr><th>Durasi</th><td>{nights > 0 ? `${nights} malam` : '-'}</td></tr>
+                                            <tr><th>Harga/Malam</th><td>{selectedType ? formatRp(selectedType.base_price) : '-'}</td></tr>
+                                            <tr><th>Subtotal</th><td>{formatRp(subTotal)}</td></tr>
+                                            <tr><th>Service (10%)</th><td>{formatRp(serviceCharge)}</td></tr>
+                                            <tr><th>Pajak (11%)</th><td>{formatRp(tax)}</td></tr>
+                                            <tr><th>Total Estimasi</th><td className="text-primary fw-bold">{formatRp(grandTotal)}</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <hr />
                                 <div className="d-grid gap-2">
                                     <button type="submit" className="btn btn-primary" disabled={processing}>Perbarui & Konfirmasi</button>

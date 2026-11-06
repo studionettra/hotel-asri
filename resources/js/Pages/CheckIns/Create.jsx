@@ -48,18 +48,20 @@ export default function Create({ reservation, availableRooms }) {
                     <div className="card">
                         <div className="card-header"><h4 className="card-title">Ringkasan Reservasi</h4></div>
                         <div className="card-body">
-                            <table className="table table-borderless table-sm">
-                                <tbody>
-                                    <tr><td className="text-muted">No. Reservasi</td><td><strong>{reservation.reservation_code}</strong></td></tr>
-                                    <tr><td className="text-muted">Tamu</td><td><strong>{reservation.guest?.full_name}</strong></td></tr>
-                                    <tr><td className="text-muted">Tipe Kamar</td><td>{reservation.room_type?.name}</td></tr>
-                                    <tr><td className="text-muted">Check-In</td><td>{formatTanggal(reservation.check_in_date)}</td></tr>
-                                    <tr><td className="text-muted">Check-Out</td><td>{formatTanggal(reservation.check_out_date)}</td></tr>
-                                    <tr><td className="text-muted">Durasi</td><td>{nights} malam</td></tr>
-                                    <tr><td className="text-muted">Tamu</td><td>{reservation.adults} dewasa{reservation.children > 0 ? `, ${reservation.children} anak` : ''}</td></tr>
-                                    <tr><td className="text-muted">Total</td><td><strong className="text-success">{formatRp(reservation.total_amount)}</strong></td></tr>
-                                </tbody>
-                            </table>
+                            <div className="table-responsive">
+                                <table className="table table-borderless table-sm mb-0">
+                                    <tbody>
+                                        <tr><td className="text-muted" style={{ minWidth: '110px' }}>No. Reservasi</td><td><strong>{reservation.reservation_code}</strong></td></tr>
+                                        <tr><td className="text-muted">Tamu</td><td><strong>{reservation.guest?.full_name}</strong></td></tr>
+                                        <tr><td className="text-muted">Tipe Kamar</td><td>{reservation.room_type?.name}</td></tr>
+                                        <tr><td className="text-muted">Check-In</td><td>{formatTanggal(reservation.check_in_date)}</td></tr>
+                                        <tr><td className="text-muted">Check-Out</td><td>{formatTanggal(reservation.check_out_date)}</td></tr>
+                                        <tr><td className="text-muted">Durasi</td><td>{nights} malam</td></tr>
+                                        <tr><td className="text-muted">Tamu</td><td>{reservation.adults} dewasa{reservation.children > 0 ? `, ${reservation.children} anak` : ''}</td></tr>
+                                        <tr><td className="text-muted">Total</td><td><strong className="text-success">{formatRp(reservation.total_amount)}</strong></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

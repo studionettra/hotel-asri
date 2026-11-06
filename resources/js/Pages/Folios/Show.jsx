@@ -314,12 +314,12 @@ export default function Show({ folio }) {
                             <table className="table table-hover mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Tanggal</th>
-                                        <th>Jenis</th>
-                                        <th>Deskripsi</th>
-                                        <th className="text-center">Qty</th>
-                                        <th className="text-end">Harga</th>
-                                        <th className="text-end">Total</th>
+                                        <th style={{ width: '15%', minWidth: '110px' }}>Tanggal</th>
+                                        <th style={{ width: '12%', minWidth: '95px' }}>Jenis</th>
+                                        <th style={{ width: '35%', minWidth: '160px' }}>Deskripsi</th>
+                                        <th className="text-center" style={{ width: '8%', minWidth: '60px' }}>Qty</th>
+                                        <th className="text-end" style={{ width: '15%', minWidth: '110px' }}>Harga</th>
+                                        <th className="text-end" style={{ width: '15%', minWidth: '110px' }}>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -350,11 +350,11 @@ export default function Show({ folio }) {
                             <table className="table table-hover mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Tanggal</th>
-                                        <th>No. Pembayaran</th>
-                                        <th>Jenis</th>
-                                        <th>Metode</th>
-                                        <th className="text-end">Jumlah</th>
+                                        <th style={{ width: '20%', minWidth: '110px' }}>Tanggal</th>
+                                        <th style={{ width: '25%', minWidth: '130px' }}>No. Pembayaran</th>
+                                        <th style={{ width: '15%', minWidth: '100px' }}>Jenis</th>
+                                        <th style={{ width: '18%', minWidth: '100px' }}>Metode</th>
+                                        <th className="text-end" style={{ width: '22%', minWidth: '120px' }}>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>

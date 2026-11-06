@@ -63,52 +63,60 @@ export default function Index({ floors }) {
                     <div className="card">
                         <div className="card-header"><h4 className="card-title">Daftar Lantai</h4></div>
                         <div className="card-body">
-                            <table className="table table-striped table-hover">
-                                <thead>
-                                    <tr><th>#</th><th>Nomor</th><th>Nama</th><th>Keterangan</th><th>Aksi</th></tr>
-                                </thead>
-                                <tbody>
-                                    {floors.length === 0 && (
-                                        <tr><td colSpan={5} className="text-center text-muted">Belum ada data lantai.</td></tr>
-                                    )}
-                                    {floors.map((floor, i) => (
-                                        <tr key={floor.id}>
-                                            {editing === floor.id ? (
-                                                <td colSpan={4}>
-                                                    <form onSubmit={e => submitEdit(e, floor)} className="d-flex gap-2 align-items-center flex-wrap">
-                                                        <input type="number" className="form-control form-control-sm" style={{ width: 80 }}
-                                                            value={editForm.data.floor_number} onChange={e => editForm.setData('floor_number', e.target.value)} />
-                                                        <input type="text" className="form-control form-control-sm" placeholder="Nama lantai"
-                                                            style={{ width: 150 }} value={editForm.data.floor_name}
-                                                            onChange={e => editForm.setData('floor_name', e.target.value)} />
-                                                        <input type="text" className="form-control form-control-sm" placeholder="Keterangan"
-                                                            value={editForm.data.description} onChange={e => editForm.setData('description', e.target.value)} />
-                                                        <button className="btn btn-sm btn-success" disabled={editForm.processing}>Simpan</button>
-                                                        <button type="button" className="btn btn-sm btn-secondary" onClick={() => setEditing(null)}>Batal</button>
-                                                    </form>
-                                                </td>
-                                            ) : (
-                                                <>
-                                                    <td>{i + 1}</td>
-                                                    <td>{floor.floor_number}</td>
-                                                    <td>{floor.floor_name || '-'}</td>
-                                                    <td>{floor.description || '-'}</td>
-                                                </>
-                                            )}
-                                            {editing !== floor.id && (
-                                                <td>
-                                                    <button className="btn btn-sm btn-warning me-1" onClick={() => startEdit(floor)}>
-                                                        <i className="bi bi-pencil"></i>
-                                                    </button>
-                                                    <button className="btn btn-sm btn-danger" onClick={() => destroy(floor)}>
-                                                        <i className="bi bi-trash"></i>
-                                                    </button>
-                                                </td>
-                                            )}
+                            <div className="table-responsive">
+                                <table className="table table-striped table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style={{ width: '5%', minWidth: '40px' }}>#</th>
+                                            <th style={{ width: '15%', minWidth: '80px' }}>Nomor</th>
+                                            <th style={{ width: '30%', minWidth: '130px' }}>Nama</th>
+                                            <th style={{ width: '35%', minWidth: '150px' }}>Keterangan</th>
+                                            <th style={{ width: '15%', minWidth: '100px' }}>Aksi</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {floors.length === 0 && (
+                                            <tr><td colSpan={5} className="text-center text-muted py-4">Belum ada data lantai.</td></tr>
+                                        )}
+                                        {floors.map((floor, i) => (
+                                            <tr key={floor.id}>
+                                                {editing === floor.id ? (
+                                                    <td colSpan={4}>
+                                                        <form onSubmit={e => submitEdit(e, floor)} className="d-flex gap-2 align-items-center flex-wrap">
+                                                            <input type="number" className="form-control form-control-sm" style={{ width: 80 }}
+                                                                value={editForm.data.floor_number} onChange={e => editForm.setData('floor_number', e.target.value)} />
+                                                            <input type="text" className="form-control form-control-sm" placeholder="Nama lantai"
+                                                                style={{ width: 150 }} value={editForm.data.floor_name}
+                                                                onChange={e => editForm.setData('floor_name', e.target.value)} />
+                                                            <input type="text" className="form-control form-control-sm" placeholder="Keterangan"
+                                                                value={editForm.data.description} onChange={e => editForm.setData('description', e.target.value)} />
+                                                            <button className="btn btn-sm btn-success" disabled={editForm.processing}>Simpan</button>
+                                                            <button type="button" className="btn btn-sm btn-secondary" onClick={() => setEditing(null)}>Batal</button>
+                                                        </form>
+                                                    </td>
+                                                ) : (
+                                                    <>
+                                                        <td>{i + 1}</td>
+                                                        <td><strong>{floor.floor_number}</strong></td>
+                                                        <td>{floor.floor_name || '-'}</td>
+                                                        <td>{floor.description || '-'}</td>
+                                                    </>
+                                                )}
+                                                {editing !== floor.id && (
+                                                    <td>
+                                                        <button className="btn btn-sm btn-warning me-1" onClick={() => startEdit(floor)}>
+                                                            <i className="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button className="btn btn-sm btn-danger" onClick={() => destroy(floor)}>
+                                                            <i className="bi bi-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

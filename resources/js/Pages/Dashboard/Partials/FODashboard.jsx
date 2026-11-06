@@ -6,7 +6,7 @@ export default function FODashboard({ data }) {
         <div>
             {/* Quick Actions */}
             <div className="row mb-4">
-                <div className="col-12 d-flex gap-3">
+                <div className="col-12 d-flex flex-wrap gap-2">
                     <Link href={route('availability.index')} className="btn btn-primary">
                         <i className="bi bi-calendar-plus me-2"></i>Buat Reservasi Baru
                     </Link>
@@ -39,10 +39,10 @@ export default function FODashboard({ data }) {
                                     <table className="table table-hover align-middle mb-0">
                                         <thead>
                                             <tr>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Tamu</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Tipe</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Kamar</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent text-end">Aksi</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '130px' }}>Tamu</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '110px' }}>Tipe</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '80px' }}>Kamar</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent text-end" style={{ minWidth: '85px' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -78,10 +78,10 @@ export default function FODashboard({ data }) {
                                     <table className="table table-hover align-middle mb-0">
                                         <thead>
                                             <tr>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Kamar</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Tamu</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent">Tipe</th>
-                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent text-end">Aksi</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '80px' }}>Kamar</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '130px' }}>Tamu</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent" style={{ minWidth: '110px' }}>Tipe</th>
+                                                <th className="text-uppercase fw-semibold text-body-secondary small border-0 bg-transparent text-end" style={{ minWidth: '150px' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

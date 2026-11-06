@@ -252,14 +252,14 @@ export default function Index({ roomTypes }) {
                             <table className="table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th className="text-center">Kap.</th>
-                                        <th className="text-end">Harga/Malam</th>
-                                        <th>Fasilitas</th>
-                                        <th className="text-center">Kamar</th>
-                                        <th>Aksi</th>
+                                        <th style={{ width: '5%', minWidth: '40px', paddingLeft: '1.25rem' }}>#</th>
+                                        <th style={{ width: '10%', minWidth: '80px' }}>Kode</th>
+                                        <th style={{ width: '22%', minWidth: '150px' }}>Nama</th>
+                                        <th className="text-center" style={{ width: '8%', minWidth: '70px' }}>Kap.</th>
+                                        <th className="text-end" style={{ width: '18%', minWidth: '120px' }}>Harga/Malam</th>
+                                        <th style={{ width: '22%', minWidth: '180px' }}>Fasilitas</th>
+                                        <th className="text-center" style={{ width: '7%', minWidth: '70px' }}>Kamar</th>
+                                        <th style={{ width: '8%', minWidth: '80px', paddingRight: '1.25rem' }}>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>

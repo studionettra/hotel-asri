@@ -130,14 +130,14 @@ export default function Index({ orders, filters }) {
                     <table className="table table-hover align-middle mb-0">
                         <thead>
                             <tr>
-                                <th className="ps-4" style={{ width: '12%' }}>No. Pesanan</th>
-                                <th style={{ width: '12%' }}>Tipe</th>
-                                <th style={{ width: '23%' }}>Tamu / Meja</th>
-                                <th style={{ width: '12%' }}>Status</th>
-                                <th className="text-end" style={{ width: '12%' }}>Total</th>
-                                <th style={{ width: '12%' }}>Kasir</th>
-                                <th style={{ width: '12%' }}>Waktu</th>
-                                <th className="text-center pe-4" style={{ width: '5%' }}>Aksi</th>
+                                <th style={{ width: '12%', minWidth: '120px', paddingLeft: '1.5rem' }}>No. Pesanan</th>
+                                <th style={{ width: '12%', minWidth: '110px' }}>Tipe</th>
+                                <th style={{ width: '23%', minWidth: '150px' }}>Tamu / Meja</th>
+                                <th style={{ width: '12%', minWidth: '110px' }}>Status</th>
+                                <th className="text-end" style={{ width: '12%', minWidth: '110px' }}>Total</th>
+                                <th style={{ width: '12%', minWidth: '100px' }}>Kasir</th>
+                                <th style={{ width: '12%', minWidth: '120px' }}>Waktu</th>
+                                <th className="text-center" style={{ width: '5%', minWidth: '80px', paddingRight: '1.5rem' }}>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

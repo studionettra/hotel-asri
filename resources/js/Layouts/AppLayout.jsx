@@ -58,6 +58,14 @@ export default function AppLayout({ children, title, breadcrumbs = [] }) {
             <div id="app">
                 <Sidebar isActive={isSidebarActive} onToggle={() => setIsSidebarActive(!isSidebarActive)} />
 
+                {isSidebarActive && (
+                    <div 
+                        className="sidebar-backdrop d-xl-none position-fixed top-0 start-0 w-100 h-100" 
+                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.45)', zIndex: 9, backdropFilter: 'blur(2px)', cursor: 'pointer' }}
+                        onClick={() => setIsSidebarActive(false)}
+                    />
+                )}
+
                 <div id="main" className="layout-navbar navbar-fixed">
                     <header>
                         <nav className="navbar navbar-expand navbar-light navbar-top">

@@ -59,15 +59,15 @@ export default function Index({ reservations }) {
                         <table className="table table-hover align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th className="ps-4" style={{ width: '12%' }}>Kode</th>
-                                    <th style={{ width: '18%' }}>Tamu</th>
-                                    <th style={{ width: '15%' }}>Tipe Kamar</th>
-                                    <th className="text-center" style={{ width: '10%' }}>No. Kamar</th>
-                                    <th style={{ width: '12%' }}>Check In</th>
-                                    <th style={{ width: '12%' }}>Check Out</th>
-                                    <th className="text-center" style={{ width: '5%' }}>Pax</th>
-                                    <th style={{ width: '10%' }}>Status</th>
-                                    <th className="text-center pe-4" style={{ width: '6%' }}>Aksi</th>
+                                    <th style={{ width: '12%', minWidth: '130px', paddingLeft: '1.5rem' }}>Kode</th>
+                                    <th style={{ width: '18%', minWidth: '150px' }}>Tamu</th>
+                                    <th style={{ width: '15%', minWidth: '130px' }}>Tipe Kamar</th>
+                                    <th className="text-center" style={{ width: '10%', minWidth: '95px' }}>No. Kamar</th>
+                                    <th style={{ width: '12%', minWidth: '115px' }}>Check In</th>
+                                    <th style={{ width: '12%', minWidth: '115px' }}>Check Out</th>
+                                    <th className="text-center" style={{ width: '5%', minWidth: '60px' }}>Pax</th>
+                                    <th style={{ width: '10%', minWidth: '110px' }}>Status</th>
+                                    <th className="text-center" style={{ width: '6%', minWidth: '90px', paddingRight: '1.5rem' }}>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

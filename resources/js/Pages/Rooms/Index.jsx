@@ -58,75 +58,84 @@ export default function Index({ rooms, floors, roomTypes }) {
                     </button>
                 </div>
                 <div className="card-body">
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr><th>#</th><th>No. Kamar</th><th>Lantai</th><th>Tipe</th><th>Status</th><th>Aksi</th></tr>
-                        </thead>
-                        <tbody>
-                            {rooms.length === 0 && (
-                                <tr><td colSpan={6} className="text-center text-muted">Belum ada data kamar.</td></tr>
-                            )}
-                            {rooms.map((room, i) => (
-                                <tr key={room.id}>
-                                    {editing === room.id ? (
-                                        <td colSpan={5}>
-                                            <form onSubmit={e => submitEdit(e, room)} className="d-flex gap-2 flex-wrap align-items-center">
-                                                <input type="text" className="form-control form-control-sm" style={{ width: 90 }} placeholder="No. Kamar"
-                                                    value={editForm.data.room_number} onChange={e => editForm.setData('room_number', e.target.value)} />
-                                                <select className="form-select form-select-sm" style={{ width: 120 }}
-                                                    value={editForm.data.floor_id} onChange={e => editForm.setData('floor_id', e.target.value)}>
-                                                    <option value="">Lantai</option>
-                                                    {floors.map(f => <option key={f.id} value={f.id}>{f.floor_name || `Lantai ${f.floor_number}`}</option>)}
-                                                </select>
-                                                <select className="form-select form-select-sm" style={{ width: 140 }}
-                                                    value={editForm.data.room_type_id} onChange={e => editForm.setData('room_type_id', e.target.value)}>
-                                                    <option value="">Tipe</option>
-                                                    {roomTypes.map(rt => <option key={rt.id} value={rt.id}>{rt.name}</option>)}
-                                                </select>
-                                                <select className="form-select form-select-sm" style={{ width: 140 }}
-                                                    value={editForm.data.status} onChange={e => editForm.setData('status', e.target.value)}>
-                                                    {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-                                                </select>
-                                                <button className="btn btn-sm btn-success" disabled={editForm.processing}>Simpan</button>
-                                                <button type="button" className="btn btn-sm btn-secondary" onClick={() => setEditing(null)}>Batal</button>
-                                            </form>
-                                        </td>
-                                    ) : (
-                                        <>
-                                            <td>{i + 1}</td>
-                                            <td><strong>{room.room_number}</strong></td>
-                                            <td>{room.floor?.floor_name || `Lantai ${room.floor?.floor_number}`}</td>
-                                            <td>
-                                                <div className="fw-semibold">{room.room_type?.name}</div>
-                                                {Array.isArray(room.room_type?.facilities) && (
-                                                    <div className="d-flex flex-wrap gap-1 mt-1" style={{ maxWidth: '250px' }}>
-                                                        {room.room_type.facilities.map((f, idx) => (
-                                                            <span key={idx} className="badge bg-light text-dark border" style={{ fontSize: '0.7em' }}>{f}</span>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </td>
-                                            <td>
-                                                <span className={`badge bg-${STATUS_LABELS[room.status]?.color ?? 'secondary'}`}>
-                                                    {STATUS_LABELS[room.status]?.label ?? room.status}
-                                                </span>
-                                            </td>
-                                        </>
-                                    )}
-                                    {editing !== room.id && (
-                                        <td>
-                                            <button className="btn btn-sm btn-warning me-1" onClick={() => startEdit(room)}>
-                                                <i className="bi bi-pencil"></i>
-                                            </button>
-                                            <button className="btn btn-sm btn-danger" onClick={() => destroy(room)}>
-                                                <i className="bi bi-trash"></i>
-                                            </button>
-                                        </td>
-                                    )}
+                    <div className="table-responsive">
+                        <table className="table table-striped table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '5%', minWidth: '40px' }}>#</th>
+                                    <th style={{ width: '12%', minWidth: '90px' }}>No. Kamar</th>
+                                    <th style={{ width: '15%', minWidth: '100px' }}>Lantai</th>
+                                    <th style={{ width: '38%', minWidth: '220px' }}>Tipe</th>
+                                    <th style={{ width: '15%', minWidth: '130px' }}>Status</th>
+                                    <th style={{ width: '15%', minWidth: '100px' }}>Aksi</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {rooms.length === 0 && (
+                                    <tr><td colSpan={6} className="text-center text-muted py-4">Belum ada data kamar.</td></tr>
+                                )}
+                                {rooms.map((room, i) => (
+                                    <tr key={room.id}>
+                                        {editing === room.id ? (
+                                            <td colSpan={6}>
+                                                <form onSubmit={e => submitEdit(e, room)} className="d-flex gap-2 flex-wrap align-items-center">
+                                                    <input type="text" className="form-control form-control-sm" style={{ width: 90 }} placeholder="No. Kamar"
+                                                        value={editForm.data.room_number} onChange={e => editForm.setData('room_number', e.target.value)} />
+                                                    <select className="form-select form-select-sm" style={{ width: 120 }}
+                                                        value={editForm.data.floor_id} onChange={e => editForm.setData('floor_id', e.target.value)}>
+                                                        <option value="">Lantai</option>
+                                                        {floors.map(f => <option key={f.id} value={f.id}>{f.floor_name || `Lantai ${f.floor_number}`}</option>)}
+                                                    </select>
+                                                    <select className="form-select form-select-sm" style={{ width: 140 }}
+                                                        value={editForm.data.room_type_id} onChange={e => editForm.setData('room_type_id', e.target.value)}>
+                                                        <option value="">Tipe</option>
+                                                        {roomTypes.map(rt => <option key={rt.id} value={rt.id}>{rt.name}</option>)}
+                                                    </select>
+                                                    <select className="form-select form-select-sm" style={{ width: 140 }}
+                                                        value={editForm.data.status} onChange={e => editForm.setData('status', e.target.value)}>
+                                                        {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                                                    </select>
+                                                    <button className="btn btn-sm btn-success" disabled={editForm.processing}>Simpan</button>
+                                                    <button type="button" className="btn btn-sm btn-secondary" onClick={() => setEditing(null)}>Batal</button>
+                                                </form>
+                                            </td>
+                                        ) : (
+                                            <>
+                                                <td>{i + 1}</td>
+                                                <td><strong>{room.room_number}</strong></td>
+                                                <td>{room.floor?.floor_name || `Lantai ${room.floor?.floor_number}`}</td>
+                                                <td>
+                                                    <div className="fw-semibold">{room.room_type?.name}</div>
+                                                    {Array.isArray(room.room_type?.facilities) && (
+                                                        <div className="d-flex flex-wrap gap-1 mt-1" style={{ maxWidth: '250px' }}>
+                                                            {room.room_type.facilities.map((f, idx) => (
+                                                                <span key={idx} className="badge bg-light text-dark border" style={{ fontSize: '0.7em' }}>{f}</span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    <span className={`badge bg-${STATUS_LABELS[room.status]?.color ?? 'secondary'}`}>
+                                                        {STATUS_LABELS[room.status]?.label ?? room.status}
+                                                    </span>
+                                                </td>
+                                            </>
+                                        )}
+                                        {editing !== room.id && (
+                                            <td>
+                                                <button className="btn btn-sm btn-warning me-1" onClick={() => startEdit(room)}>
+                                                    <i className="bi bi-pencil"></i>
+                                                </button>
+                                                <button className="btn btn-sm btn-danger" onClick={() => destroy(room)}>
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

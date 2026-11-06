@@ -152,14 +152,14 @@ export default function Index({ guests }) {
                         <table className="table table-hover align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th className="ps-4" style={{ width: '5%' }}>#</th>
-                                    <th style={{ width: '22%' }}>Nama</th>
-                                    <th style={{ width: '18%' }}>ID</th>
-                                    <th style={{ width: '15%' }}>Perusahaan</th>
-                                    <th style={{ width: '15%' }}>Pekerjaan</th>
-                                    <th style={{ width: '12%' }}>No. HP</th>
-                                    <th className="text-center" style={{ width: '7%' }}>Reservasi</th>
-                                    <th className="text-center pe-4" style={{ width: '6%' }}>Aksi</th>
+                                    <th style={{ width: '5%', minWidth: '40px', paddingLeft: '1.5rem' }}>#</th>
+                                    <th style={{ width: '22%', minWidth: '160px' }}>Nama</th>
+                                    <th style={{ width: '18%', minWidth: '150px' }}>ID</th>
+                                    <th style={{ width: '15%', minWidth: '130px' }}>Perusahaan</th>
+                                    <th style={{ width: '15%', minWidth: '130px' }}>Pekerjaan</th>
+                                    <th style={{ width: '12%', minWidth: '120px' }}>No. HP</th>
+                                    <th className="text-center" style={{ width: '7%', minWidth: '85px' }}>Reservasi</th>
+                                    <th className="text-center" style={{ width: '6%', minWidth: '90px', paddingRight: '1.5rem' }}>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
